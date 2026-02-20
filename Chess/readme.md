@@ -1,9 +1,7 @@
 # Is This Chess?
 
 ### The pixel cat-themed chess, but with a twist!
-
 ---
-
 #### Description
 
 
