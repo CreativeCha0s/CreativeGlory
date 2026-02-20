@@ -5,7 +5,7 @@
 ---
 
 #### Description
-
+A chess copy made with Java. Players will play against one other person using the standard rules of chess (but with a catch). There will be obstacles players can obtain throughout the game that they can place on the board. These can block paths, but players must place these strategically as to not disadvantage themselves. Players can also use their pieces to collect power ups. These can either allow a piece to move extra spaces, make the opponents piece be able to move less spaces, skip the oppnents turn, or bring a piece back into the game. Each player has a time limit of five minutes by default (or however long the player wants).
 
 ---
 
