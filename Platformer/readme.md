@@ -8,6 +8,5 @@ Characters: There will be two characters. One that runs fast but doesnt have a d
 Biomes: The game will include multiple biomes such as grass, canyon, volcano, and other potential biomes that are more unique
 
 
-<img width="320" height="180" alt="pixil-frame-0 (3)" src="https://github.com/user-attachments/assets/b60e0c3a-d3a5-4c4e-bcb3-8ad12ed3ddba" />
-
-<img width="320" height="180" alt="pixil-frame-0 (2)" src="https://github.com/user-attachments/assets/d1e72188-3a03-4b78-ae01-07435df9aba4" />
+<img width="960" height="540" alt="pixil-frame-0 (5)" src="https://github.com/user-attachments/assets/7dccf020-1f06-4fad-9231-8a54134b2a2b" />
+<img width="960" height="540" alt="pixil-frame-0 (4)" src="https://github.com/user-attachments/assets/d6e4c410-e0b6-4cbe-842f-4b280900e46f" />
