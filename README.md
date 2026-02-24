@@ -24,9 +24,9 @@ A chess copy made with Java. Players will play against one other person using th
 
 ---
 
-Runner Game - Ryan's Idea
+# Runner Game - Ryan's Idea
 
-Main Idea: A 2D platformer with random platforms pulled from a class and put into the game, kinda like the pipes in flappy bird. 
+### Main Idea: A 2D platformer with random platforms pulled from a class and put into the game, kinda like the pipes in flappy bird. 
 The user is able to jump, double jump, slide, and wall jump, depending on the obstacle they are facing.
 
 Modes: The game will include an endless mode, where you keep running until you die. There is also a speedrun mode where you beat a level as fast as possible.
