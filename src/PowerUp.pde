@@ -13,7 +13,12 @@ class PowerUp {
     collide = false;
   }
   
-  void display() {}
+  void display() {
+    if (type == "InfiniteStamina") {
+      infStam = loadImage("none.png");
+    }
+  }
   
   //boolean getPowerUp() {}
+  
 }
