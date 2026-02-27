@@ -45,6 +45,10 @@ void startScreen () {
   textMode(CENTER);
   textSize(100);
   text("Untitled Runner Game", 800, 100);
+  textSize(50);
+  text("By Angie, Grace, & Ryan", 800, 150);
+  textSize(100);
+  text("Play", 800, 600);
 }
 
 void modeScreen () {
