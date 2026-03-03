@@ -110,7 +110,7 @@ void settingsScreen() {
   text("Settings", 800, 100);
 }
 
-//makes the button functional
+//makes the buttons functional
 void mousePressed() {
   switch(screen) {
     case 'S':
