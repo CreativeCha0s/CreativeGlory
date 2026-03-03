@@ -5,18 +5,18 @@ class Obstacle {
   // --- Position ---
   float x, y;
 
-  PImage test;
+  PImage placeholder;
 
   Obstacle(float x, float y) {
     this.x = x;
     this.y = y;
     
-    test = loadImage("placeholder.png");
+    placeholder = loadImage("placeholder.jpeg");
   }
 
   void display() {
-    image(test, x, y);
-    test.resize(200, 200);
+    image(placeholder, x, y);
+    placeholder.resize(200, 200);
     text("Obstacle place holder", x, y);
   }
 
