@@ -20,6 +20,9 @@ PowerUp infStam;
 //player
 Player player;
 
+//obstacle
+Obstacle obstacle;
+
 void setup () {
   size(1600, 900);
   
@@ -40,6 +43,9 @@ void setup () {
   
   //player set up
   player = new Player(1000, 200);
+  
+  //obstacle set up
+  obstacle = new Obstacle(400,600);
 }
 
 void draw() {
@@ -89,6 +95,8 @@ void gameScreen() {
   infStam.moveRight();
   player.display();
   player.moveRight();
+  obstacle.display();
+  obstacle.moveRight();
   
   //if (inGame == 1) {
     //RandTerrain BackObj = new RandTerrain();
@@ -96,7 +104,11 @@ void gameScreen() {
     //}
 }
 
-void settingsScreen() {}
+void settingsScreen() {
+  image(titleScreen, 0, 0);
+  
+  text("Settings", 800, 100);
+}
 
 //makes the button functional
 void mousePressed() {
@@ -104,6 +116,9 @@ void mousePressed() {
     case 'S':
       if (btnPlay.clicked()) {
         screen = 'G';
+        break;
+      } else if (btnSettings.clicked()) {
+        screen = 'O';
         break;
       }
   }
