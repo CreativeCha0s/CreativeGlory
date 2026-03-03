@@ -7,17 +7,17 @@ class Player {
 
   PImage test;
 
-  Player() {
-    x = 0;
-    y = 0;
-
+  Player(float x, float y) {
+    this.x = x;
+    this.y = y;
+    
     test = loadImage("testCharacter.png");
   }
 
   void display() {
-    imageMode(CENTER);
     image(test, x, y);
-    test.resize(13, 13);
+    test.resize(200, 200);
+    text("Player place holder", x, y);
   }
 
   //void moveLeft() {
@@ -25,8 +25,9 @@ class Player {
   //  if (x < 0) x = width;
   //}
 
-  //void moveRight() {
-  //  x += 25;
-  //  if (x > width) x = 0;
-  //}
+//used just for the assignment
+  void moveRight() {
+    x += 6;
+    if (x > width) x = 0;
+  }
 }
