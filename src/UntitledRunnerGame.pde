@@ -67,7 +67,13 @@ void modeScreen () {
   text ("Modes", 800, 100);
 }
 
-void gameScreen() {}
+void gameScreen() {
+  
+  if (inGame == 1) {
+    RandTerrain BackObj = new RandTerrain();
+    BackObj.backgrounds();
+    }
+}
 
 void settingsScreen() {}
 
