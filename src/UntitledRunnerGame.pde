@@ -69,10 +69,10 @@ void modeScreen () {
 
 void gameScreen() {
   
-  if (inGame == 1) {
-    RandTerrain BackObj = new RandTerrain();
-    BackObj.backgrounds();
-    }
+  //if (inGame == 1) {
+    //RandTerrain BackObj = new RandTerrain();
+    //BackObj.backgrounds();
+    //}
 }
 
 void settingsScreen() {}
