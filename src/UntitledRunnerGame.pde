@@ -14,6 +14,12 @@ char screen = 'S'; //S = start screen, M = modes, G = actual game, O = options/s
 //buttons
 Button btnPlay, btnInfiniteMode, btnSpeedRunMode, btnSettings;
 
+//powerups
+PowerUp infStam;
+
+//player
+Player player;
+
 void setup () {
   size(1600, 900);
   
@@ -28,6 +34,12 @@ void setup () {
   //button setup, parameters in order are text, x position, y position, width, height, normal color, hovering color, text size
   btnPlay = new Button("Play", 800, 450, 400, 100, #ff9538, #ffd1a8, 150);
   btnSettings = new Button("Settings", 800, 650, 350, 100, #ff9538, #ffd1a8, 100);
+  
+  //power up set up
+  infStam = new PowerUp(500, 300, "InfiniteStamina");
+  
+  //player set up
+  player = new Player(1000, 200);
 }
 
 void draw() {
@@ -72,6 +84,11 @@ void modeScreen () {
 
 void gameScreen() {
   image(galacticCanyon, 0, 0);
+  
+  infStam.display();
+  infStam.moveRight();
+  player.display();
+  player.moveRight();
   
   //if (inGame == 1) {
     //RandTerrain BackObj = new RandTerrain();
