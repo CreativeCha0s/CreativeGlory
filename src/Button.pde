@@ -2,24 +2,32 @@
 
 class Button {
   String label;
-  float x, y, w, h;
-  color c1;
+  float x, y, w, h, textsize;
+  color c1, c2;
 
-  Button(String label, float x, float y, float w, float h, color c1) {
+
+  Button(String label, float x, float y, float w, float h, color c1, color c2, float textsize) {
     this.label = label;
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
     this.c1 = c1;
+    this.c2 = c2;
+    this.textsize = textsize;
   }
 
   void display() {
     rectMode(CENTER);
-    fill(c1);
+    if (mouseX > x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY < y+h/2) {
+      fill(c2);
+    } else {
+      fill(c1);
+    }
+    
     rect(x, y, w, h);
     fill(255);
-    textSize(150);
+    textSize(textsize);
     text(label, x, y);
     
   }
@@ -27,4 +35,5 @@ class Button {
   boolean clicked() {
     return (mouseX > x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY < y+h/2 && mousePressed);
   }
+  
 }
