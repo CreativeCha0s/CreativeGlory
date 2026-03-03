@@ -11,6 +11,9 @@ PFont PixelFont;
 //screens
 char screen = 'S'; //S = start screen, M = modes, G = actual game, O = options/settings screen
 
+//buttons
+Button btnPlay, btnSettings;
+
 void setup () {
   size(1600, 900);
   
@@ -18,10 +21,15 @@ void setup () {
   PixelFont = createFont("PixelFont.ttf", 32);
   textFont(PixelFont);
   
+  //image setup
   titleScreen = loadImage("titleScreen.png");
+  
+  //button setup, parameters in order are text, x position, y position, width, height, color
+  btnPlay = new Button("Play", 800, 450, 400, 100, #ff9538);
 }
 
 void draw() {
+  //how we're switching the screens
   switch(screen) {
     case 'S':
       startScreen();
@@ -38,6 +46,7 @@ void draw() {
   }
 }
 
+//methods are each screen
 void startScreen () {
   image(titleScreen, 0, 0);
   
@@ -48,7 +57,8 @@ void startScreen () {
   textSize(50);
   text("By Angie, Grace, & Ryan", 800, 150);
   textSize(100);
-  text("Play", 800, 600);
+  
+  btnPlay.display();
 }
 
 void modeScreen () {
