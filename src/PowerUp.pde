@@ -1,7 +1,7 @@
 // ANGIE LIU
 
 class PowerUp {
-  PImage infStam, speedUp;
+  PImage powerImage;
   int infStaminaTimer, speedUpTimer, x, y;
   String type;
   boolean collide;
@@ -15,10 +15,23 @@ class PowerUp {
   
   void display() {
     if (type == "InfiniteStamina") {
-      infStam = loadImage("none.png");
+      powerImage = loadImage("timer.jpeg");
+    } else if (type == "SpeedUp") {
+      powerImage = loadImage("none.png");
     }
+    
+    image(powerImage, x, y);
+    textSize(50);
+    fill(255,0,0);
+    text("Place holder power up", x, y);
   }
   
   //boolean getPowerUp() {}
+  
+  //used just for the assignment
+  void moveRight() {
+    x += 6;
+    if (x > width) x = 0;
+  }
   
 }
