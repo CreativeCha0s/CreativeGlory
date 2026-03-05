@@ -5,7 +5,7 @@ class Player {
   // --- Position ---
   float x, y, speed;
   
-  boolean moveRight, moveLeft, jump;
+  boolean isMovingLeft, isMovingRight;
 
   PImage test;
 
@@ -13,6 +13,9 @@ class Player {
     this.x = x;
     this.y = y;
     this.speed = speed;
+    
+    isMovingLeft = false;
+    isMovingRight = false;
     
     test = loadImage("testCharacter.png");
   }
@@ -25,22 +28,11 @@ class Player {
   
   //player movement
   void move () {
-    if (keyPressed) {
-      if (key == 'd' || keyCode == RIGHT) {
-        moveRight = true;
-        if (moveRight) {
-          x += speed;
-       }
-      }
-      if (key == 'a' || keyCode == LEFT) {
-        moveLeft = true;
-        if (moveLeft) {
-          x -= speed;
-        }
-      }
+    if (isMovingLeft == true) {
+      x -= speed;
     }
-    //if (keyCode == 32) {
-      
-    //}
+    if (isMovingRight == true) {
+      x += speed;
+    }
   }
 }
