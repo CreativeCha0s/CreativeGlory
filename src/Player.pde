@@ -4,6 +4,8 @@ class Player {
 
   // --- Position ---
   float x, y, speed;
+  
+  boolean moveRight, moveLeft, jump;
 
   PImage test;
 
@@ -21,15 +23,24 @@ class Player {
     text("Player place holder", x, y);
   }
   
-  void moveRight() {
-    x += speed;
-  }
-  
-  void moveLeft() {
-    x -= speed;
-  }
-  
-  void jump () {
-    y -= 10;
+  //player movement
+  void move () {
+    if (keyPressed) {
+      if (key == 'd' || keyCode == RIGHT) {
+        moveRight = true;
+        if (moveRight) {
+          x += speed;
+       }
+      }
+      if (key == 'a' || keyCode == LEFT) {
+        moveLeft = true;
+        if (moveLeft) {
+          x -= speed;
+        }
+      }
+    }
+    if (keyCode == 32) {
+      
+    }
   }
 }
