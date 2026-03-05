@@ -31,59 +31,59 @@ int mode = 0;
 
 void setup () {
   size(1600, 900);
-  
+
   frameRate(90);
-  
+
   //font setup
   PixelFont = createFont("PixelFont.ttf", 32);
   textFont(PixelFont);
-  
+
   //image setup
   titleScreen = loadImage("titleScreen.png");
   backGalcan = loadImage("GalacticCanyonBackground.png");
   layOneGalcan = loadImage("GalacticCanyonLayer1.png");
   layTwoGalcan = loadImage("GalacticCanyonLayer2.png");
   layThreeGalcan = loadImage("GalacticCanyonLayer3.png");
-  
-  
+
+
   //button setup, parameters in order are text, x position, y position, width, height, normal color, hovering color, text size
   btnPlay = new Button("Play", 800, 450, 400, 100, #ff9538, #ffd1a8, 150);
   btnSettings = new Button("Settings", 800, 650, 350, 100, #ff9538, #ffd1a8, 100);
-  btnSpeedRunMode = new Button ("Speedrun Mode", 800, 450, 570, 100, #ff9538, #ffd1a8, 100); 
-  btnInfiniteMode = new Button ("Endless Mode", 800, 650, 550, 100, #ff9538, #ffd1a8, 100); 
-  
+  btnSpeedRunMode = new Button ("Speedrun Mode", 800, 450, 570, 100, #ff9538, #ffd1a8, 100);
+  btnInfiniteMode = new Button ("Endless Mode", 800, 650, 550, 100, #ff9538, #ffd1a8, 100);
+
   //power up set up
   infStam = new PowerUp(500, 300, "InfiniteStamina");
-  
+
   //player set up
   player = new Player(1000, 200, 10);
-  
+
   //obstacle set up
-  obstacle = new Obstacle(400,600);
+  obstacle = new Obstacle(400, 600);
 }
 
 void draw() {
   //how we're switching the screens
   switch(screen) {
-    case 'S':
-      startScreen();
-      break;
-    case 'M':
-       modeScreen();
-       break;
-    case 'G':
-       gameScreen();
-       break;
-    case 'O':
-      settingsScreen();
-      break;
+  case 'S':
+    startScreen();
+    break;
+  case 'M':
+    modeScreen();
+    break;
+  case 'G':
+    gameScreen();
+    break;
+  case 'O':
+    settingsScreen();
+    break;
   }
 }
 
 //methods are each screen
 void startScreen () {
   image(titleScreen, 0, 0);
-  
+
   textAlign(CENTER, CENTER);
   textMode(CENTER);
   textSize(100);
@@ -91,82 +91,88 @@ void startScreen () {
   textSize(50);
   text("By Angie, Grace, & Ryan", 800, 150);
   textSize(100);
-  
+
   btnPlay.display();
   btnSettings.display();
 }
 
 void modeScreen () {
   image(titleScreen, 0, 0);
-  
+
   text ("Modes", 800, 100);
+
+  btnInfiniteMode.display();
+  btnSpeedRunMode.display();
 }
 
 void gameScreen() {
   image(backGalcan, 0, 0);
   image(layOneGalcan, lay1speed, 0);
   image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
-  image(layTwoGalcan, lay2speed , 0);
+  image(layTwoGalcan, lay2speed, 0);
   image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
-  image(layThreeGalcan, 0, 0); 
- 
+  image(layThreeGalcan, 0, 0);
+
   lay1speed -= 0.25;
   lay2speed -= 0.5;
-  
+
   if (lay1speed <= -layOneGalcan.width) {
     lay1speed = 0;
   }
-   if (lay2speed <= -layOneGalcan.width) {
+  if (lay2speed <= -layOneGalcan.width) {
     lay2speed = 0;
   }
-  
+
   infStam.display();
   infStam.moveRight();
   player.display();
+  player.move();
   obstacle.display();
   obstacle.moveRight();
-  
-
 }
 
 void settingsScreen() {
   image(titleScreen, 0, 0);
-  
+
   text("Settings", 800, 100);
 }
 
 //makes the buttons functional
 void mousePressed() {
   switch(screen) {
-    case 'S':
-     if (btnPlay.clicked()) {
-       screen = 'M';
+  case 'S':
+    if (btnPlay.clicked()) {
+      screen = 'M';
       break;
-     }
-    case 'M':
-      if (btnSpeedRunMode.clicked()) {
-       screen = 'G';
+    }
+  case 'M':
+    if (btnSpeedRunMode.clicked()) {
+      screen = 'G';
       break;
-      
-     }
-     else if (btnInfiniteMode.clicked()) {
-       screen = 'G';
-       break;
-       } else if (btnSettings.clicked()) {
-        screen = 'O';
-        break;
+    } else if (btnInfiniteMode.clicked()) {
+      screen = 'G';
+      break;
+    } else if (btnSettings.clicked()) {
+      screen = 'O';
+      break;
     }
   }
 }
 
 void keyPressed() {
-  if (key == 'd' || keyCode == RIGHT) {
-    player.moveRight();
-  }
   if (key == 'a' || keyCode == LEFT) {
-    player.moveLeft();
+    player.isMovingLeft = true;
   }
-  if (keyCode == 32) {
-    player.jump();
+  if (key == 'd' || keyCode == RIGHT) {
+    player.isMovingRight = true;
   }
+}
+
+void keyReleased() {
+  if (key == 'a' || keyCode == LEFT) {
+    player.isMovingLeft = false;
+  }
+  if (key == 'd' || keyCode == RIGHT) {
+  }
+  player.isMovingRight = false;
 }
