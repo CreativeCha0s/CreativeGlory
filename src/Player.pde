@@ -3,13 +3,14 @@
 class Player {
 
   // --- Position ---
-  float x, y;
+  float x, y, speed;
 
   PImage test;
 
-  Player(float x, float y) {
+  Player(float x, float y, float speed) {
     this.x = x;
     this.y = y;
+    this.speed = speed;
     
     test = loadImage("testCharacter.png");
   }
@@ -19,15 +20,16 @@ class Player {
     test.resize(200, 200);
     text("Player place holder", x, y);
   }
-
-  //void moveLeft() {
-  //  x -= 25;
-  //  if (x < 0) x = width;
-  //}
-
-//used just for the assignment
+  
   void moveRight() {
-    x += 6;
-    if (x > width) x = 0;
+    x += speed;
+  }
+  
+  void moveLeft() {
+    x -= speed;
+  }
+  
+  void jump () {
+    y -= 10;
   }
 }
