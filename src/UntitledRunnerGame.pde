@@ -26,6 +26,8 @@ Obstacle obstacle;
 void setup () {
   size(1600, 900);
   
+  frameRate(90);
+  
   //font setup
   PixelFont = createFont("PixelFont.ttf", 32);
   textFont(PixelFont);
@@ -42,7 +44,7 @@ void setup () {
   infStam = new PowerUp(500, 300, "InfiniteStamina");
   
   //player set up
-  player = new Player(1000, 200);
+  player = new Player(1000, 200, 10);
   
   //obstacle set up
   obstacle = new Obstacle(400,600);
@@ -94,7 +96,6 @@ void gameScreen() {
   infStam.display();
   infStam.moveRight();
   player.display();
-  player.moveRight();
   obstacle.display();
   obstacle.moveRight();
   
@@ -124,4 +125,14 @@ void mousePressed() {
   }
 }
 
-void keyPressed() {}
+void keyPressed() {
+  if (key == 'd' || keyCode == RIGHT) {
+    player.moveRight();
+  }
+  if (key == 'a' || keyCode == LEFT) {
+    player.moveLeft();
+  }
+  if (keyCode == 32) {
+    player.jump();
+  }
+}
