@@ -1,33 +1,40 @@
-//RYAN OLIVER
+// ANGIE LIU
 
-class Obstacle {
-
-  // --- Position ---
-  float x, y;
-
-  PImage placeholder;
-
-  Obstacle(float x, float y) {
+class PowerUp {
+  PImage powerImage;
+  int infStaminaTimer, speedUpTimer, x, y;
+  String type;
+  boolean collide;
+  
+  PowerUp(int x, int y, String type) {
     this.x = x;
     this.y = y;
-    
-    placeholder = loadImage("placeholder.jpeg");
+    this.type = type;
+    collide = false;
   }
-
+  
   void display() {
-    image(placeholder, x, y);
-    placeholder.resize(200, 200);
-    text("Obstacle place holder", x, y);
+    if (type == "InfiniteStamina") {
+      powerImage = loadImage("timer.jpeg");
+    } else if (type == "SpeedUp") {
+      powerImage = loadImage("none.png");
+    } else if (type == "StaminaOrb") {
+      powerImage = loadImage("stamina.png");
+    }
+  
+    powerImage.resize(50, 50);
+    image(powerImage, x, y);
+    textSize(50);
+    fill(255,0,0);
+    moveRight();
   }
-
-  //void moveLeft() {
-  //  x -= 25;
-  //  if (x < 0) x = width;
-  //}
-
-//used just for the assignment
+  
+  //boolean getPowerUp() {}
+  
+  //used just for the assignment
   void moveRight() {
     x += 6;
     if (x > width) x = 0;
   }
+  
 }
