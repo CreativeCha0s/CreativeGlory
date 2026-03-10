@@ -9,7 +9,7 @@ PImage titleScreen, backGalcan, layOneGalcan, layTwoGalcan, layThreeGalcan;
 PFont PixelFont;
 
 //screens
-char screen = 'S'; //S = start screen, M = modes, I = infinite mode, R = speedrun mode, O = options/settings screen
+char screen = 'S'; //S = start screen, M = modes, G = actual game, O = options/settings screen
 
 //buttons
 Button btnPlay, btnInfiniteMode, btnSpeedRunMode, btnSettings;
@@ -29,6 +29,7 @@ float lay2speed = 0;
 float lay3speed = 0;
 int inGame = 0;
 int mode = 0;
+
 
 void setup () {
   size(1600, 900);
@@ -54,7 +55,7 @@ void setup () {
   btnInfiniteMode = new Button ("Endless Mode", 800, 650, 550, 100, #ff9538, #ffd1a8, 100);
 
   //power up set up
-  staminaOrb = new PowerUp(500, 300, "StaminaOrb");
+  staminaOrb = new PowerUp(500, 500, "StaminaOrb");
 
   //player set up
   player = new Player(1000, 700, 10);
@@ -64,6 +65,11 @@ void setup () {
 }
 
 void draw() {
+  //powerups
+  if (staminaOrb.intersect(player)) {
+    player.stamina+=1;
+  }
+
   //how we're switching the screens
   switch(screen) {
   case 'S':
@@ -72,14 +78,11 @@ void draw() {
   case 'M':
     modeScreen();
     break;
+  case 'G':
+    gameScreen();
+    break;
   case 'O':
     settingsScreen();
-    break;
-  case 'I':
-    infiniteMode();
-    break;
-  case 'R':
-    speedRunMode();
     break;
   }
 }
@@ -168,6 +171,36 @@ void infiniteMode() {
   obstacle.moveRight();
 }
 
+
+void gameScreen() {
+  image(backGalcan, 0, 0);
+  image(layOneGalcan, lay1speed, 0);
+  image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
+  image(layTwoGalcan, lay2speed, 0);
+  image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
+  image(layThreeGalcan, lay3speed, 0);
+  image(layThreeGalcan, lay3speed + layThreeGalcan.width, 0);
+
+  lay1speed -= 0.25;
+  lay2speed -= 0.5;
+  lay3speed -= 0.75;
+
+  if (lay1speed <= -layOneGalcan.width) {
+    lay1speed = 0;
+  }
+  if (lay2speed <= -layOneGalcan.width) {
+    lay2speed = 0;
+  }
+  if (lay3speed <= -layOneGalcan.width) {
+    lay3speed = 0;
+  }
+
+  staminaOrb.display();
+  player.display();
+  obstacle.display();
+  obstacle.moveRight();
+}
+
 void settingsScreen() {
   image(titleScreen, 0, 0);
 
@@ -184,10 +217,10 @@ void mousePressed() {
     }
   case 'M':
     if (btnSpeedRunMode.clicked()) {
-      screen = 'R';
+      screen = 'G';
       break;
     } else if (btnInfiniteMode.clicked()) {
-      screen = 'I';
+      screen = 'G';
       break;
     } else if (btnSettings.clicked()) {
       screen = 'O';
@@ -204,9 +237,9 @@ void keyPressed() {
   if (key == 'd' || keyCode == RIGHT) {
     player.isMovingRight = true;
   }
-  
+
   //player jumping, full code in player class
-  if(keyCode == 32) {
+  if (keyCode == 32) {
     player.jump();
   }
 }
