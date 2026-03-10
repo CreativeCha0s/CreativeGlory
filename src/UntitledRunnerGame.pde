@@ -112,11 +112,11 @@ void modeScreen () {
 //methods for the two modes
 void speedRunMode() {
   image(backGalcan, 0, 0);
-  image(layOneGalcan, lay1speed, 0);
+  //image(layOneGalcan, lay1speed, 0);
   image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
-  image(layTwoGalcan, lay2speed, 0);
+  //image(layTwoGalcan, lay2speed, 0);
   image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
-  image(layThreeGalcan, lay3speed, 0);
+  //image(layThreeGalcan, lay3speed, 0);
   image(layThreeGalcan, lay3speed + layThreeGalcan.width, 0);
 
   lay1speed -= 0.25;
