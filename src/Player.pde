@@ -1,9 +1,9 @@
-//GRACE PERRY
-
 class Player {
 
   // --- Position ---
   float x, y, speed, gravity, yVelocity, groundY, jumpStrength;
+  
+  int stamina;
 
   boolean isMovingLeft, isMovingRight, isGrounded;
 
@@ -23,14 +23,14 @@ class Player {
     isGrounded = true;
 
     test = loadImage("testCharacter.png");
+    stamina = 100;
   }
 
   void display() {
     image(test, x, y);
     test.resize(200, 200);
     text("Player place holder", x, y);
-    
-    //called in the display method so we don't need to call it everytime on the main class
+
     update();
     move();
   }
@@ -58,9 +58,9 @@ class Player {
       x += speed;
     }
   }
-  
+
   void jump() {
-    if(isGrounded) {
+    if (isGrounded) {
       yVelocity = jumpStrength;
       isGrounded = false;
     }
