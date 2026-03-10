@@ -1,5 +1,8 @@
 # Runner Game - Ryan's Idea
 
+#### TEAM CONTRIBUTIONS:
+Angie Liu: player controls and jumping (Player.pde and UntitledRunnerGame.pde)
+
 ### Main Idea: A 2D platformer with random platforms pulled from a class and put into the game, kinda like the pipes in flappy bird. 
 The user is able to jump, double jump, slide, and wall jump, depending on the obstacle they are facing.
 
