@@ -3,9 +3,9 @@
 class Player {
 
   // --- Position ---
-  float x, y, speed;
-  
-  boolean isMovingLeft, isMovingRight;
+  float x, y, speed, gravity, yVelocity, groundY, jumpStrength;
+
+  boolean isMovingLeft, isMovingRight, isGrounded;
 
   PImage test;
 
@@ -13,10 +13,15 @@ class Player {
     this.x = x;
     this.y = y;
     this.speed = speed;
-    
+    gravity = 0.6;
+    yVelocity = 0;
+    groundY = 600;
+    jumpStrength = -12;
+
     isMovingLeft = false;
     isMovingRight = false;
-    
+    isGrounded = true;
+
     test = loadImage("testCharacter.png");
   }
 
@@ -24,8 +29,25 @@ class Player {
     image(test, x, y);
     test.resize(200, 200);
     text("Player place holder", x, y);
+    
+    update();
+    move();
   }
-  
+
+  void update() {
+    //applies gravity
+
+    yVelocity += gravity;
+    y += yVelocity;
+
+    //ground collision
+    if (y >= groundY) {
+      y = groundY;
+      yVelocity = 0;
+      isGrounded = true;
+    }
+  }
+
   //player movement
   void move () {
     if (isMovingLeft == true) {
@@ -33,6 +55,13 @@ class Player {
     }
     if (isMovingRight == true) {
       x += speed;
+    }
+  }
+  
+  void jump() {
+    if(isGrounded) {
+      yVelocity = jumpStrength;
+      isGrounded = false;
     }
   }
 }
