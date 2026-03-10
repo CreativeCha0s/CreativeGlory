@@ -16,7 +16,7 @@ class Player {
     gravity = 0.6;
     yVelocity = 0;
     groundY = 600;
-    jumpStrength = -12;
+    jumpStrength = -17;
 
     isMovingLeft = false;
     isMovingRight = false;
@@ -30,6 +30,7 @@ class Player {
     test.resize(200, 200);
     text("Player place holder", x, y);
     
+    //called in the display method so we don't need to call it everytime on the main class
     update();
     move();
   }
