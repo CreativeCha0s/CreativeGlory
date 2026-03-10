@@ -164,18 +164,22 @@ void mousePressed() {
 }
 
 void keyPressed() {
+  //player movement, full code in player class
   if (key == 'a' || keyCode == LEFT) {
     player.isMovingLeft = true;
   }
   if (key == 'd' || keyCode == RIGHT) {
     player.isMovingRight = true;
   }
+  
+  //player jumping, full code in player class
   if(keyCode == 32) {
     player.jump();
   }
 }
 
 void keyReleased() {
+  //stops movement if the key is released
   if (key == 'a' || keyCode == LEFT) {
     player.isMovingLeft = false;
   }
