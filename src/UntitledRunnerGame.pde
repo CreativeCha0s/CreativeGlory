@@ -15,7 +15,7 @@ char screen = 'S'; //S = start screen, M = modes, G = actual game, O = options/s
 Button btnPlay, btnInfiniteMode, btnSpeedRunMode, btnSettings;
 
 //powerups
-PowerUp infStam;
+PowerUp staminaOrb;
 
 //player
 Player player;
@@ -53,10 +53,10 @@ void setup () {
   btnInfiniteMode = new Button ("Endless Mode", 800, 650, 550, 100, #ff9538, #ffd1a8, 100);
 
   //power up set up
-  infStam = new PowerUp(500, 300, "InfiniteStamina");
+  staminaOrb = new PowerUp(500, 300, "StaminaOrb");
 
   //player set up
-  player = new Player(1000, 200, 10);
+  player = new Player(1000, 700, 10);
 
   //obstacle set up
   obstacle = new Obstacle(400, 600);
@@ -123,10 +123,8 @@ void gameScreen() {
     lay2speed = 0;
   }
 
-  infStam.display();
-  infStam.moveRight();
+  staminaOrb.display();
   player.display();
-  player.move();
   obstacle.display();
   obstacle.moveRight();
 }
@@ -166,6 +164,9 @@ void keyPressed() {
   if (key == 'd' || keyCode == RIGHT) {
     player.isMovingRight = true;
   }
+  if(keyCode == 32) {
+    player.jump();
+  }
 }
 
 void keyReleased() {
@@ -173,6 +174,6 @@ void keyReleased() {
     player.isMovingLeft = false;
   }
   if (key == 'd' || keyCode == RIGHT) {
+    player.isMovingRight = false;
   }
-  player.isMovingRight = false;
 }
