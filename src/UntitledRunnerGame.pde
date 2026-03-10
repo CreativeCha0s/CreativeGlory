@@ -9,7 +9,7 @@ PImage titleScreen, backGalcan, layOneGalcan, layTwoGalcan, layThreeGalcan;
 PFont PixelFont;
 
 //screens
-char screen = 'S'; //S = start screen, M = modes, G = actual game, O = options/settings screen
+char screen = 'S'; //S = start screen, M = modes, I = infinite mode, R = speedrun mode, O = options/settings screen
 
 //buttons
 Button btnPlay, btnInfiniteMode, btnSpeedRunMode, btnSettings;
@@ -72,11 +72,14 @@ void draw() {
   case 'M':
     modeScreen();
     break;
-  case 'G':
-    gameScreen();
-    break;
   case 'O':
     settingsScreen();
+    break;
+  case 'I':
+    infiniteMode();
+    break;
+  case 'R':
+    speedRunMode();
     break;
   }
 }
@@ -106,7 +109,37 @@ void modeScreen () {
   btnSpeedRunMode.display();
 }
 
-void gameScreen() {
+//methods for the two modes
+void speedRunMode() {
+  image(backGalcan, 0, 0);
+  image(layOneGalcan, lay1speed, 0);
+  image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
+  image(layTwoGalcan, lay2speed, 0);
+  image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
+  image(layThreeGalcan, lay3speed, 0);
+  image(layThreeGalcan, lay3speed + layThreeGalcan.width, 0);
+
+  lay1speed -= 0.25;
+  lay2speed -= 0.5;
+  lay3speed -= 0.75;
+
+  if (lay1speed <= -layOneGalcan.width) {
+    lay1speed = 0;
+  }
+  if (lay2speed <= -layOneGalcan.width) {
+    lay2speed = 0;
+  }
+  if (lay3speed <= -layOneGalcan.width) {
+    lay3speed = 0;
+  }
+
+  staminaOrb.display();
+  player.display();
+  obstacle.display();
+  obstacle.moveRight();
+}
+
+void infiniteMode() {
   image(backGalcan, 0, 0);
   image(layOneGalcan, lay1speed, 0);
   image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
@@ -151,10 +184,10 @@ void mousePressed() {
     }
   case 'M':
     if (btnSpeedRunMode.clicked()) {
-      screen = 'G';
+      screen = 'R';
       break;
     } else if (btnInfiniteMode.clicked()) {
-      screen = 'G';
+      screen = 'I';
       break;
     } else if (btnSettings.clicked()) {
       screen = 'O';
