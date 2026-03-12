@@ -65,12 +65,7 @@ void setup () {
 }
 
 void draw() {
-  //powerups
-  if (staminaOrb.intersect(player)) {
-    player.stamina+=1;
-  }
-
-  //how we're switching the screens
+  // how we're switching the screens
   switch(screen) {
   case 'S':
     startScreen();
@@ -80,12 +75,16 @@ void draw() {
     break;
   case 'G':
     gameScreen();
+    if (staminaOrb.intersect(player)) {
+      player.stamina = min(player.stamina + 20, player.maxStamina);
+    }
     break;
   case 'O':
     settingsScreen();
     break;
   }
 }
+
 
 //methods are each screen
 void startScreen () {
@@ -173,6 +172,22 @@ void infiniteMode() {
 
 
 void gameScreen() {
+  staminaOrb.display();
+  player.display();
+  obstacle.display();
+  obstacle.moveRight();
+
+  if (staminaOrb.intersect(player)) {
+    player.stamina += 30;
+
+    if (player.stamina > player.maxStamina) {
+      player.stamina = player.maxStamina;
+    }
+
+    staminaOrb.x = -100;
+    staminaOrb.y = (int)random(400, 500);
+  }
+
   image(backGalcan, 0, 0);
   image(layOneGalcan, lay1speed, 0);
   image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
