@@ -1,9 +1,9 @@
 # UNTITLED RUNNER GAME
 
 #### RECENT TEAM CONTRIBUTIONS:
-* Angie Liu: player controls and jumping (Player.pde and UntitledRunnerGame.pde)
-* Ryan Oliver: random terrain and background movement (RandTerrain.pde and UntitledRunnerGame.pde)
-* Grace Perry: collision dectection (Player.pde)
+* Angie Liu: player controls and jumping (Player.pde and UntitledRunnerGame.pde), and lead programmer
+* Ryan Oliver: random terrain and background movement (RandTerrain.pde and UntitledRunnerGame.pde), & lead artist
+* Grace Perry: collision dectection (Player.pde), & lead sound designer
 
 ---
 
