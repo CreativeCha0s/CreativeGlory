@@ -1,12 +1,9 @@
 class Player {
-
-  // --- Position ---
   float x, y, speed, gravity, yVelocity, groundY, jumpStrength;
-  
   int stamina;
+  int maxStamina = 100; 
 
   boolean isMovingLeft, isMovingRight, isGrounded;
-
   PImage test;
 
   Player(float x, float y, float speed) {
@@ -17,11 +14,9 @@ class Player {
     yVelocity = 0;
     groundY = 600;
     jumpStrength = -17;
-
     isMovingLeft = false;
     isMovingRight = false;
     isGrounded = true;
-
     test = loadImage("testCharacter.png");
     stamina = 100;
   }
@@ -29,19 +24,15 @@ class Player {
   void display() {
     image(test, x, y);
     test.resize(200, 200);
-    text("Player place holder", x, y);
-
+    
+    drawStaminaBar(); // New: visual helper
     update();
     move();
   }
 
   void update() {
-    //applies gravity
-
     yVelocity += gravity;
     y += yVelocity;
-
-    //ground collision
     if (y >= groundY) {
       y = groundY;
       yVelocity = 0;
@@ -49,14 +40,22 @@ class Player {
     }
   }
 
-  //player movement
-  void move () {
-    if (isMovingLeft == true) {
-      x -= speed;
+  void move() {
+    // Drain stamina when moving
+    if (isMovingLeft || isMovingRight) {
+      if (stamina > 0) stamina -= 1;
     }
-    if (isMovingRight == true) {
-      x += speed;
-    }
+
+    // Only move if there is stamina left
+    if (isMovingLeft && stamina > 0) x -= speed;
+    if (isMovingRight && stamina > 0) x += speed;
+  }
+
+  void drawStaminaBar() {
+    fill(50);
+    rect(x + 50, y - 20, maxStamina, 10);
+    fill(0, 255, 0);
+    rect(x + 50, y - 20, stamina, 10);    
   }
 
   void jump() {
