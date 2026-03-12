@@ -98,7 +98,7 @@ void startScreen () {
   textSize(150);
   text("Untitled Runner Game", 800, 100);
   textSize(50);
-  text("()", 800, 200);
+  text("(Yes That's the Name)", 800, 200);
   textSize(100);
 
   btnPlay.display();
