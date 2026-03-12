@@ -1,47 +1,36 @@
-// ANGIE LIU
-
 class PowerUp {
   PImage powerImage;
-  int infStaminaTimer, speedUpTimer, x, y;
+  int x, y;
   String type;
-  boolean collide;
 
   PowerUp(int x, int y, String type) {
     this.x = x;
     this.y = y;
     this.type = type;
-    collide = false;
   }
 
   void display() {
-    if (type == "InfiniteStamina") {
-      powerImage = loadImage("timer.jpeg");
-    } else if (type == "SpeedUp") {
-      powerImage = loadImage("none.png");
-    } else if (type == "StaminaOrb") {
+    if (type.equals("StaminaOrb")) {
       powerImage = loadImage("stamina.png");
+    } else {
+      powerImage = loadImage("none.png");
     }
 
-    powerImage.resize(50, 50);
-    image(powerImage, x, y);
-    textSize(50);
-    fill(255, 0, 0);
+    if (powerImage != null) {
+      powerImage.resize(50, 50);
+      image(powerImage, x, y);
+    }
     moveRight();
   }
 
-
-  //used just for the assignment
   void moveRight() {
     x += 6;
-    if (x > width) x = 0;
+    if (x > width) x = -50; 
   }
 
   boolean intersect(Player p) {
-    float d = dist(x, y, p.x, p.y);
-    if (d<50) {
-      return true;
-    } else {
-      return false;
-    }
+
+    float d = dist(x + 25, y + 25, p.x + 100, p.y + 100);
+    return (d < 80); 
   }
 }
