@@ -1,7 +1,8 @@
 class Player {
   float x, y, speed, gravity, yVelocity, groundY, jumpStrength;
   int stamina;
-  int maxStamina = 100; 
+  int maxStamina = 100;
+  int maxHealth = 100;
 
   boolean isMovingLeft, isMovingRight, isGrounded;
   PImage test;
@@ -25,7 +26,8 @@ class Player {
     image(test, x, y);
     test.resize(200, 200);
     
-    drawStaminaBar(); // New: visual helper
+    drawStaminaBar();
+    drawHealthBar();
     update();
     move();
   }
@@ -56,6 +58,14 @@ class Player {
     rect(x + 50, y - 20, maxStamina, 10);
     fill(0, 255, 0);
     rect(x + 50, y - 20, stamina, 10);    
+  }
+
+  //health bar
+  void drawHealthBar() {
+    fill(50);
+    rect(x + 50, y - 40, maxHealth, 10);
+    fill(255, 0, 0);
+    rect(x + 50, y - 40, maxHealth, 10);
   }
 
   void jump() {
