@@ -53,8 +53,8 @@ void setup () {
   btnSettings = new Button("Settings", 800, 650, 350, 100, #ff9538, #ffd1a8, 100);
   btnBack = new Button("Back", 125, 75, 150, 75, #ff9538, #ffd1a8, 75);
   btnCredits = new Button("Credits", 1450, 825, 225, 75, #ff9538, #ffd1a8, 75);
-  btnMainMenu = new Button ("Main Menu", 800, 650, 550, 100, #ff9538, #ffd1a8, 100);
-  btnRestart = new Button ("Restart", 800, 800, 550, 100, #ff9538, #ffd1a8, 100);
+  btnMainMenu = new Button ("Main Menu", 800, 650, 300, 100, #ff9538, #ffd1a8, 75);
+  btnRestart = new Button ("Restart", 800, 400, 400, 100, #ff9538, #ffd1a8, 100);
 
   //power up set up
   staminaOrb = new PowerUp(0, (int)random(300, 500), "StaminaOrb");
@@ -127,10 +127,10 @@ void gameScreen() {
 
   staminaOrb.display();
   player.display();
+  
 
   if (player.stamina == 0) {
     gameOver();
-    gameOver = true;
   }
 
   if (staminaOrb.intersect(player) && gameOver == false) {
@@ -188,6 +188,9 @@ void gameOver() {
   text("Game Over!", 800, 100);
   textSize(50);
   text("Monitor your health and stamina carefully...", 800, 800);
+  
+  btnMainMenu.display();
+  btnRestart.display();
 }
 
 //makes the buttons functional
@@ -212,6 +215,18 @@ void mousePressed() {
   case 'C':
     if (btnBack.clicked()) {
       screen = 'S';
+      break;
+    }
+  case 'I':
+    if (btnMainMenu.clicked()) {
+      gameOver = false;
+      player.stamina = 100;
+      screen = 'S';
+      break;
+    } else if (btnRestart.clicked()) {
+      gameOver = false;
+      player.stamina = 100;
+      screen = 'I';
       break;
     }
   }
