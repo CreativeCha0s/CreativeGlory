@@ -35,9 +35,13 @@ float lay3speed = 0;
 int inGame = 0;
 int mode = 0;
 boolean gameOver = false;
+boolean isPaused = false;
 
 void setup () {
   size(1600, 900);
+
+  //to make sure it doesn't lag on different types of computers
+  pixelDensity(1);
 
   //music*
   //spaceLvl.play();
@@ -71,7 +75,7 @@ void setup () {
   player = new Player(1000, 700, 10);
 
   //obstacle set up
-  obstacle = new Obstacle(400, 600);
+  obstacle = new Obstacle(0, 600);
 }
 
 void draw() {
@@ -92,7 +96,7 @@ void draw() {
   }
 }
 
-//methods are each screen
+//methods for each screen
 void startScreen () {
   image(titleScreen, 0, 0);
 
@@ -111,65 +115,74 @@ void startScreen () {
 
 //methods for the actual game
 void gameScreen() {
-  image(backGalcan, 0, 0);
-  //music*
-  //spaceLvl.play();
-
-  //image(layOneGalcan, lay1speed, 0);
-  //image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
-  //image(layTwoGalcan, lay2speed, 0);
-  //image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
-  //image(layThreeGalcan, lay3speed, 0);
-  //image(layThreeGalcan, lay3speed + layThreeGalcan.width, 0);
-
-  //lay1speed -= 0.25;
-  //lay2speed -= 0.5;
-  //lay3speed -= 0.75;
-
-  //if (lay1speed <= -layOneGalcan.width) {
-  //  lay1speed = 0;
-  //}
-  //if (lay2speed <= -layOneGalcan.width) {
-  //  lay2speed = 0;
-  //}
-  //if (lay3speed <= -layOneGalcan.width) {
-  //  lay3speed = 0;
-  //}
-
-  staminaOrb.display();
-  player.display();
   
+  //only runs if the player is alive or is unpaused
+  if (gameOver == false) {
+    image(backGalcan, 0, 0);
+    //music*
+    //spaceLvl.play();
 
-  if (player.stamina == 0) {
-    gameOver();
-  }
+    //image(layOneGalcan, lay1speed, 0);
+    //image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
+    //image(layTwoGalcan, lay2speed, 0);
+    //image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
+    //image(layThreeGalcan, lay3speed, 0);
+    //image(layThreeGalcan, lay3speed + layThreeGalcan.width, 0);
 
-  if (staminaOrb.intersect(player) && gameOver == false) {
-    player.stamina += 100;
+    //lay1speed -= 0.25;
+    //lay2speed -= 0.5;
+    //lay3speed -= 0.75;
 
-    if (player.stamina > player.maxStamina) {
-      player.stamina = player.maxStamina;
+    //if (lay1speed <= -layOneGalcan.width) {
+    //  lay1speed = 0;
+    //}
+    //if (lay2speed <= -layOneGalcan.width) {
+    //  lay2speed = 0;
+    //}
+    //if (lay3speed <= -layOneGalcan.width) {
+    //  lay3speed = 0;
+    //}
+
+    staminaOrb.display();
+    obstacle.display();
+    player.display();
+
+    if (staminaOrb.intersect(player)) {
+      player.stamina += 100;
+
+      if (player.stamina > player.maxStamina) {
+        player.stamina = player.maxStamina;
+      }
+
+      staminaOrb.x = -100;
+      staminaOrb.y = (int)random(300, 550);
     }
-
-    staminaOrb.x = -100;
-    staminaOrb.y = (int)random(300, 550);
+    
+    //movement for stamina orbs and obstacles
+    staminaOrb.x += 6;
+    obstacle.x += 6;
+    if (staminaOrb.x > width) {
+      staminaOrb.x = -100;
+      staminaOrb.y = (int)random(300, 550);
+    }
+    if (obstacle.x > width) {
+      obstacle.x = -100;
+    }
+    //instruction thing | Grace
+    //fill(255);
+    //textSize(50);
+    //textAlign(CENTER);
+    //text("Use a or left key to move left", 350, 150);
+    //fill(255);
+    //textSize(50);
+    //text("Use d or right key to move right", 1200, 150);
+    //text("Use spacebar to jump", 800, 180);
+    //text("Collect blue orbs to regain stamina", 800, 210);
   }
-  staminaOrb.x += 6;
-  if (staminaOrb.x > width) {
-    staminaOrb.x = -100;
-    staminaOrb.y = (int)random(300, 550);
-  }
-  //instruction thing | Grace
-  fill(255);
-  textSize(50);
-  textAlign(CENTER);
-  text("Use a or left key to move left", 350, 150);
-  fill(255);
-  textSize(50);
-  text("Use d or right key to move right", 1200, 150);
-  text("Use spacebar to jump", 800, 180);
-  text("Collect blue orbs to regain stamina", 800, 210);
-
+  if (player.stamina == 0) {
+      gameOver = true;
+      gameOver();
+    }
 }
 
 
@@ -177,6 +190,8 @@ void gameScreen() {
 void settingsScreen() {
   image(titleScreen, 0, 0);
 
+  textAlign(CENTER, CENTER);
+  textMode(CENTER);
   textSize(150);
   text("Settings", 800, 100);
 
@@ -186,6 +201,8 @@ void settingsScreen() {
 void creditsScreen() {
   image(titleScreen, 0, 0);
 
+  textAlign(CENTER, CENTER);
+  textMode(CENTER);
   textSize(150);
   text("Credits", 800, 100);
 
@@ -206,11 +223,13 @@ void gameOver() {
   image(backGalcan, 0, 0);
 
   fill(255);
+  textAlign(CENTER, CENTER);
+  textMode(CENTER);
   textSize(150);
   text("Game Over!", 800, 100);
   textSize(50);
   text("Monitor your health and stamina carefully...", 800, 800);
-  
+
   btnMainMenu.display();
   btnRestart.display();
 }
@@ -243,6 +262,8 @@ void mousePressed() {
     if (btnMainMenu.clicked()) {
       gameOver = false;
       player.stamina = 100;
+      staminaOrb.x = -100;
+      obstacle.x = -100;
       screen = 'S';
       break;
     } else if (btnRestart.clicked()) {
