@@ -5,25 +5,19 @@ class Obstacle {
   // --- Position ---
   float x, y;
 
-  PImage placeholder;
+  PImage spike;
 
   Obstacle(float x, float y) {
     this.x = x;
     this.y = y;
     
-    placeholder = loadImage("placeholder.jpeg");
+    spike = loadImage("spike.png");
   }
 
   void display() {
-    image(placeholder, x, y);
-    placeholder.resize(200, 200);
-    text("Obstacle place holder", x, y);
+    image(spike, x, y, 200, 200);
+    moveRight();
   }
-
-  //void moveLeft() {
-  //  x -= 25;
-  //  if (x < 0) x = width;
-  //}
 
 //used just for the assignment
   void moveRight() {
