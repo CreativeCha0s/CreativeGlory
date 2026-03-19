@@ -59,7 +59,8 @@ class Player {
   }
 
   void jump() {
-    if (isGrounded) {
+    if (isGrounded && stamina > 0) {
+      stamina -= 10;
       yVelocity = jumpStrength;
       isGrounded = false;
     }
