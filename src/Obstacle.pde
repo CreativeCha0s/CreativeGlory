@@ -11,17 +11,12 @@ class Obstacle {
     this.x = x;
     this.y = y;
     
+    //placeholder
     spike = loadImage("spike.png");
   }
 
   void display() {
     image(spike, x, y, 200, 200);
-    moveRight();
   }
 
-//used just for the assignment
-  void moveRight() {
-    x += 6;
-    if (x > width) x = 0;
-  }
 }
