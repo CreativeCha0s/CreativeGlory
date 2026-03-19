@@ -8,6 +8,11 @@ PImage titleScreen, backGalcan, layOneGalcan, layTwoGalcan, layThreeGalcan;
 //font
 PFont PixelFont;
 
+//music |Grace
+//THE SOUND LIBRARY WASNT WORKINGGGGGGGGGGG*
+//import processing.sound.*;
+//SoundFile spaceLvl;
+
 //screens
 char screen = 'S'; //S = start screen, M = modes, I = endless mode, O = options/settings screen, C = credits screen
 
@@ -33,6 +38,9 @@ boolean gameOver = false;
 
 void setup () {
   size(1600, 900);
+
+  //music*
+  //spaceLvl.play();
 
   frameRate(90);
 
@@ -104,6 +112,9 @@ void startScreen () {
 //methods for the actual game
 void gameScreen() {
   image(backGalcan, 0, 0);
+  //music*
+  //spaceLvl.play();
+
   //image(layOneGalcan, lay1speed, 0);
   //image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
   //image(layTwoGalcan, lay2speed, 0);
@@ -148,6 +159,17 @@ void gameScreen() {
     staminaOrb.x = -100;
     staminaOrb.y = (int)random(300, 550);
   }
+  //instruction thing | Grace
+  fill(255);
+  textSize(50);
+  textAlign(CENTER);
+  text("Use a or left key to move left", 350, 150);
+  fill(255);
+  textSize(50);
+  text("Use d or right key to move right", 1200, 150);
+  text("Use spacebar to jump", 800, 180);
+  text("Collect blue orbs to regain stamina", 800, 210);
+
 }
 
 
