@@ -1,3 +1,5 @@
+//GRACE the obstacle should be displayed now, make sure to update the obstacle tab too and download the spike.png
+
 //ANGIE LIU
 
 // Set up the images, buttons, fonts, screen sizes
