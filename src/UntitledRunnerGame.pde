@@ -1,5 +1,8 @@
 //GRACE the obstacle should be displayed now, make sure to update the obstacle tab too and download the spike.png
 
+//recent changes: added fully functioning UI (pause menu, gameover screen, restart button, button to exit program, tutorial, controls), score system
+//working on: gravity simulation and obstacles
+
 //ANGIE LIU
 
 // Set up the images, buttons, fonts, screen sizes
@@ -34,10 +37,10 @@ Obstacle obstacle;
 float lay1speed = 0;
 float lay2speed = 0;
 float lay3speed = 0;
-int inGame = 0;
-int mode = 0;
 boolean gameOver = false;
 boolean isPaused = false;
+int score;
+int highScore;
 
 void setup () {
   size(1600, 900);
@@ -67,9 +70,9 @@ void setup () {
   btnSettings = new Button("Settings", 800, 600, 300, 75, #ff9538, #ffd1a8, 85);
   btnBack = new Button("Back", 125, 75, 150, 75, #ff9538, #ffd1a8, 75);
   btnCredits = new Button("Credits", 1450, 825, 225, 75, #ff9538, #ffd1a8, 75);
-  btnMainMenu = new Button ("Main Menu", 800, 700, 300, 100, #ff9538, #ffd1a8, 75);
-  btnRestart = new Button ("Restart", 800, 400, 350, 100, #ff9538, #ffd1a8, 100);
-  btnResume = new Button ("Resume", 800, 550, 300, 100, #ff9538, #ffd1a8, 100);
+  btnMainMenu = new Button ("Main Menu", 800, 800, 275, 75, #ff9538, #ffd1a8, 50);
+  btnRestart = new Button ("Restart", 800, 650, 350, 100, #ff9538, #ffd1a8, 100);
+  btnResume = new Button ("Resume", 800, 500, 300, 100, #ff9538, #ffd1a8, 100);
   btnQuit = new Button ("Quit", 150, 825, 200, 75, #ff9538, #ffd1a8, 75);
   btnTutorial = new Button ("Tutorial", 800, 725, 250, 75, #ff9538, #ffd1a8, 75);
 
@@ -186,16 +189,16 @@ void gameScreen() {
     if (obstacle.x > width) {
       obstacle.x = -100;
     }
-    //instruction thing | Grace
-    //fill(255);
-    //textSize(50);
-    //textAlign(CENTER);
-    //text("Use a or left key to move left", 350, 150);
-    //fill(255);
-    //textSize(50);
-    //text("Use d or right key to move right", 1200, 150);
-    //text("Use spacebar to jump", 800, 180);
-    //text("Collect blue orbs to regain stamina", 800, 210);
+    
+    //score
+    score += 5;
+    if (score >= highScore) {
+      highScore = score;
+    }
+    fill(255);
+    textSize(75);
+    text("Score: " + score, 200, 75);
+    text("High Score: " + highScore, 270, 150);
   }
   if (player.stamina == 0) {
     screen = 'E';
@@ -219,14 +222,13 @@ void settingsScreen() {
   text("TAB - Pause", 800, 350);
 
   btnBack.display();
-  
 }
 
 void creditsScreen() {
   image(titleScreen, 0, 0);
 
   textAlign(CENTER, CENTER);
-  textMode(CENTER);  
+  textMode(CENTER);
   textSize(150);
   text("Credits", 800, 100);
 
@@ -251,8 +253,12 @@ void gameOver() {
   textMode(CENTER);
   textSize(150);
   text("Game Over!", 800, 100);
-  textSize(50);
-  text("Monitor your health and stamina carefully...", 800, 800);
+  textSize(30);
+  text("Monitor your health and stamina carefully...", 800, 150);
+  
+  textSize(75);
+  text("Score: " + score, 800, 250);
+  text("High Score: " + highScore, 800, 350);
 
   btnMainMenu.display();
   btnRestart.display();
@@ -260,12 +266,16 @@ void gameOver() {
 
 void pauseScreen() {
   image(backGalcan, 0, 0);
-  
+
   fill(255);
   textAlign(CENTER, CENTER);
   textMode(CENTER);
   textSize(150);
   text("Paused", 800, 100);
+  
+  textSize(75);
+  text("Current Score: " + score, 800, 250);
+  text("Current High Score: " + highScore, 800, 350);
 
   btnResume.display();
   btnRestart.display();
@@ -274,7 +284,7 @@ void pauseScreen() {
 
 void tutorialScreen() {
   image(titleScreen, 0, 0);
-  
+
   fill(255);
   textAlign(CENTER, CENTER);
   textMode(CENTER);
@@ -286,7 +296,7 @@ void tutorialScreen() {
   text("Jump over the gaps in the terrain to avoid falling into the void.", 800, 550);
   textSize(70);
   text("The game is endless, try to go for as long as you can!", 800, 750);
-  
+
   btnBack.display();
 }
 
@@ -295,6 +305,13 @@ void mousePressed() {
   switch(screen) {
   case 'S':
     if (btnPlay.clicked()) {
+      gameOver = false;
+      isPaused = false;
+      player.stamina = 100;
+      staminaOrb.x = -100;
+      staminaOrb.y = (int)random(300, 550);
+      obstacle.x = -100;
+      score = 0;
       screen = 'I';
       break;
     } else if (btnSettings.clicked()) {
@@ -321,11 +338,7 @@ void mousePressed() {
     }
   case 'I':
     if (btnMainMenu.clicked()) {
-      gameOver = false;
-      player.stamina = 100;
-      staminaOrb.x = -100;
-      staminaOrb.y = (int)random(300, 550);
-      obstacle.x = -100;
+
       screen = 'S';
       break;
     }
@@ -336,17 +349,13 @@ void mousePressed() {
       staminaOrb.x = -100;
       staminaOrb.y = (int)random(300, 550);
       obstacle.x = -100;
+      score = 0;
       screen = 'I';
       break;
     } else if (btnResume.clicked()) {
       screen = 'I';
       break;
     } else if (btnMainMenu.clicked()) {
-      gameOver = false;
-      player.stamina = 100;
-      staminaOrb.x = -100;
-      staminaOrb.y = (int)random(300, 550);
-      obstacle.x = -100;
       screen = 'S';
       break;
     }
@@ -361,13 +370,10 @@ void mousePressed() {
       staminaOrb.x = -100;
       staminaOrb.y = (int)random(300, 550);
       obstacle.x = -100;
+      score = 0;
       screen = 'I';
       break;
     } else if (btnMainMenu.clicked()) {
-      isPaused = false;
-      staminaOrb.x = -100;
-      staminaOrb.y = (int)random(300, 550);
-      obstacle.x = -100;
       screen = 'S';
       break;
     }
