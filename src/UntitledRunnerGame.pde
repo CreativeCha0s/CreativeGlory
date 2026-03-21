@@ -1,7 +1,7 @@
-//GRACE the obstacle should be displayed now, make sure to update the obstacle tab too and download the spike.png
+//GRACE the obstacle should be displayed now, make sure to update the obstacle tab too and download the spike.png - ANGIE
 
 //recent changes: added fully functioning UI (pause menu, gameover screen, restart button, button to exit program, tutorial, controls), score system
-//working on: gravity simulation and obstacles
+//working on: gravity simulation, obstacles, music, background aesthetics
 
 //ANGIE LIU
 
