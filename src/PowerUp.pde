@@ -20,13 +20,14 @@ class PowerUp {
   }
 
   void display() {
+    //placeholder
     image(powerImage, x, y, 50, 50);
 
   }
   
   boolean intersect(Player p) {
     float d = dist(x, y, p.x, p.y);
-    if (d<75) {
+    if (d<120) {
       return true;
     } else {
       return false;
