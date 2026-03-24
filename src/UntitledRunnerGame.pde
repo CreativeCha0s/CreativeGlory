@@ -1,12 +1,14 @@
-//recent changes: added fully functioning UI (pause menu, gameover screen, restart button, button to exit program, tutorial, controls), score system, obstacle collision
+//recent changes: added fully functioning UI (pause menu, gameover screen, restart button, button to exit program, tutorial, controls), score system, obstacle collision, biome randomization
 //working on: gravity simulation, music, background aesthetics
+
+//LAG IS FIXED HOPEFULLY
 
 //ANGIE LIU
 
 // Set up the images, buttons, fonts, screen sizes
 
 //images
-PImage titleScreen, backGalcan, layOneGalcan, layTwoGalcan, layThreeGalcan;
+PImage titleScreen, backGalcan, layOneGalcan, layTwoGalcan, layThreeGalcan, backLostAbyss, layOneLostAbyss, layTwoLostAbyss, layThreeLostAbyss;
 
 //font
 PFont PixelFont;
@@ -39,6 +41,7 @@ boolean gameOver = false;
 boolean isPaused = false;
 int score;
 int highScore;
+int randBiome;
 
 void setup () {
   size(1600, 900);
@@ -61,6 +64,10 @@ void setup () {
   layOneGalcan = loadImage("GalacticCanyonLayer1.png");
   layTwoGalcan = loadImage("GalacticCanyonLayer2.png");
   layThreeGalcan = loadImage("GalacticCanyonLayer3.png");
+  backLostAbyss = loadImage("LostAbyssBackground.png");
+  layOneLostAbyss = loadImage("LostAbyssLayer1.png");
+  layTwoLostAbyss = loadImage("LostAbyssLayer2.png");
+  layThreeLostAbyss = loadImage("LostAbyssLayer3.png");
 
 
   //button setup, parameters in order are text, x position, y position, width, height, normal color, hovering color, text size
@@ -103,7 +110,7 @@ void draw() {
     pauseScreen();
     break;
   case 'E':
-    gameOver();
+    gameOver(); 
     break;
   case 'T':
     tutorialScreen();
@@ -135,30 +142,56 @@ void gameScreen() {
 
   //only runs if the player is alive or is unpaused
   if (gameOver == false && isPaused == false) {
-    image(backGalcan, 0, 0);
     //music*
     //spaceLvl.play();
 
-    image(layOneGalcan, lay1speed, 0);
-    image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
-    image(layTwoGalcan, lay2speed, 0);
-    image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
-    image(layThreeGalcan, lay3speed, 0);
-    image(layThreeGalcan, lay3speed + layThreeGalcan.width, 0);
+    //biome randomization
+    if (randBiome == 1) {
+      image(backGalcan, 0, 0);
+      image(layOneGalcan, lay1speed, 0);
+      image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
+      image(layTwoGalcan, lay2speed, 0);
+      image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
+      image(layThreeGalcan, lay3speed, 0);
+      image(layThreeGalcan, lay3speed + layThreeGalcan.width, 0);
 
-    //ITS NOT LAGGY ANYMORE YAYAYAY!!!
-    lay1speed -= 1;
-    lay2speed -= 2;
-    lay3speed -= 3;
+      //ITS NOT LAGGY ANYMORE YAYAYAY!!!
+      lay1speed -= 1;
+      lay2speed -= 2;
+      lay3speed -= 3;
 
-    if (lay1speed <= -layOneGalcan.width) {
-      lay1speed = 0;
-    }
-    if (lay2speed <= -layOneGalcan.width) {
-      lay2speed = 0;
-    }
-    if (lay3speed <= -layOneGalcan.width) {
-      lay3speed = 0;
+      if (lay1speed <= -layOneGalcan.width) {
+        lay1speed = 0;
+      }
+      if (lay2speed <= -layOneGalcan.width) {
+        lay2speed = 0;
+      }
+      if (lay3speed <= -layOneGalcan.width) {
+        lay3speed = 0;
+      }
+    } else if (randBiome == 2) {
+      image(backLostAbyss, 0, 0);
+      image(layOneLostAbyss, lay1speed, 0);
+      image(layOneLostAbyss, lay1speed + layOneLostAbyss.width, 0);
+      image(layTwoLostAbyss, lay2speed, 0);
+      image(layTwoLostAbyss, lay2speed + layTwoLostAbyss.width, 0);
+      image(layThreeLostAbyss, lay3speed, 0);
+      image(layThreeLostAbyss, lay3speed + layThreeLostAbyss.width, 0);
+
+      //ITS NOT LAGGY ANYMORE YAYAYAY!!!
+      lay1speed -= 1;
+      lay2speed -= 2;
+      lay3speed -= 3;
+
+      if (lay1speed <= -layOneGalcan.width) {
+        lay1speed = 0;
+      }
+      if (lay2speed <= -layOneGalcan.width) {
+        lay2speed = 0;
+      }
+      if (lay3speed <= -layOneGalcan.width) {
+        lay3speed = 0;
+      }
     }
 
     staminaOrb.display();
@@ -168,7 +201,7 @@ void gameScreen() {
     //movement for stamina orbs and obstacles
     staminaOrb.x -= 6;
     obstacle.x -= 6;
-    
+
     //stamina and obstacle collision detection
     if (staminaOrb.intersect(player)) {
       player.stamina += 50;
@@ -181,7 +214,7 @@ void gameScreen() {
       staminaOrb.x = 1700;
       staminaOrb.y = (int)random(300, 550);
     }
-    
+
     if (obstacle.intersect(player)) {
       player.health -= 100;
 
@@ -196,7 +229,7 @@ void gameScreen() {
     if (obstacle.x < -200) {
       obstacle.x = 1800;
     }
-    
+
     //score
     score += 5;
     if (score >= highScore) {
@@ -207,7 +240,7 @@ void gameScreen() {
     text("Score: " + score, 200, 75);
     text("High Score: " + highScore, 270, 150);
   }
-   
+
   //gameover condition
   if (player.stamina == 0 || player.health == 0) {
     screen = 'E';
@@ -264,7 +297,7 @@ void gameOver() {
   text("Game Over!", 800, 100);
   textSize(30);
   text("Avoid the obstacles while watching your stamina carefully...", 800, 150);
-  
+
   textSize(75);
   text("Score: " + score, 800, 250);
   text("High Score: " + highScore, 800, 350);
@@ -281,7 +314,7 @@ void pauseScreen() {
   textMode(CENTER);
   textSize(150);
   text("Paused", 800, 100);
-  
+
   textSize(75);
   text("Current Score: " + score, 800, 250);
   text("Current High Score: " + highScore, 800, 350);
@@ -323,6 +356,7 @@ void mousePressed() {
       obstacle.x = 1800;
       player.x = 400;
       score = 0;
+      randBiome = (int)random(1, 3);
       screen = 'I';
       break;
     } else if (btnSettings.clicked()) {
