@@ -1,7 +1,5 @@
-//GRACE the obstacle should be displayed now, make sure to update the obstacle tab too and download the spike.png - ANGIE
-
-//recent changes: added fully functioning UI (pause menu, gameover screen, restart button, button to exit program, tutorial, controls), score system
-//working on: gravity simulation, obstacles, music, background aesthetics
+//recent changes: added fully functioning UI (pause menu, gameover screen, restart button, button to exit program, tutorial, controls), score system, obstacle collision
+//working on: gravity simulation, music, background aesthetics
 
 //ANGIE LIU
 
@@ -77,13 +75,13 @@ void setup () {
   btnTutorial = new Button ("Tutorial", 800, 725, 250, 75, #ff9538, #ffd1a8, 75);
 
   //power up set up
-  staminaOrb = new PowerUp(0, (int)random(300, 500), "StaminaOrb");
+  staminaOrb = new PowerUp(1700, (int)random(300, 500), "StaminaOrb");
 
   //player set up
-  player = new Player(1000, 700, 10);
+  player = new Player(400, 700, 10);
 
   //obstacle set up
-  obstacle = new Obstacle(0, 600);
+  obstacle = new Obstacle(1700, 600);
 }
 
 void draw() {
@@ -141,53 +139,62 @@ void gameScreen() {
     //music*
     //spaceLvl.play();
 
-    //image(layOneGalcan, lay1speed, 0);
-    //image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
-    //image(layTwoGalcan, lay2speed, 0);
-    //image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
-    //image(layThreeGalcan, lay3speed, 0);
-    //image(layThreeGalcan, lay3speed + layThreeGalcan.width, 0);
+    image(layOneGalcan, lay1speed, 0);
+    image(layOneGalcan, lay1speed + layOneGalcan.width, 0);
+    image(layTwoGalcan, lay2speed, 0);
+    image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
+    image(layThreeGalcan, lay3speed, 0);
+    image(layThreeGalcan, lay3speed + layThreeGalcan.width, 0);
 
-    //lay1speed -= 0.25;
-    //lay2speed -= 0.5;
-    //lay3speed -= 0.75;
+    //ITS NOT LAGGY ANYMORE YAYAYAY!!!
+    lay1speed -= 1;
+    lay2speed -= 2;
+    lay3speed -= 3;
 
-    //if (lay1speed <= -layOneGalcan.width) {
-    //  lay1speed = 0;
-    //}
-    //if (lay2speed <= -layOneGalcan.width) {
-    //  lay2speed = 0;
-    //}
-    //if (lay3speed <= -layOneGalcan.width) {
-    //  lay3speed = 0;
-    //}
+    if (lay1speed <= -layOneGalcan.width) {
+      lay1speed = 0;
+    }
+    if (lay2speed <= -layOneGalcan.width) {
+      lay2speed = 0;
+    }
+    if (lay3speed <= -layOneGalcan.width) {
+      lay3speed = 0;
+    }
 
     staminaOrb.display();
     obstacle.display();
     player.display();
 
     //movement for stamina orbs and obstacles
-    staminaOrb.x += 6;
-    obstacle.x += 6;
-
+    staminaOrb.x -= 6;
+    obstacle.x -= 6;
+    
+    //stamina and obstacle collision detection
     if (staminaOrb.intersect(player)) {
-      player.stamina += 100;
+      player.stamina += 50;
+
 
       if (player.stamina > player.maxStamina) {
         player.stamina = player.maxStamina;
       }
 
-      staminaOrb.x = -100;
+      staminaOrb.x = 1700;
       staminaOrb.y = (int)random(300, 550);
+    }
+    
+    if (obstacle.intersect(player)) {
+      player.health -= 100;
+
+      obstacle.x = 1800;
     }
 
 
-    if (staminaOrb.x > width) {
-      staminaOrb.x = -100;
+    if (staminaOrb.x < -100) {
+      staminaOrb.x = 1700;
       staminaOrb.y = (int)random(300, 550);
     }
-    if (obstacle.x > width) {
-      obstacle.x = -100;
+    if (obstacle.x < -200) {
+      obstacle.x = 1800;
     }
     
     //score
@@ -200,7 +207,9 @@ void gameScreen() {
     text("Score: " + score, 200, 75);
     text("High Score: " + highScore, 270, 150);
   }
-  if (player.stamina == 0) {
+   
+  //gameover condition
+  if (player.stamina == 0 || player.health == 0) {
     screen = 'E';
     gameOver = true;
   }
@@ -254,7 +263,7 @@ void gameOver() {
   textSize(150);
   text("Game Over!", 800, 100);
   textSize(30);
-  text("Monitor your health and stamina carefully...", 800, 150);
+  text("Avoid the obstacles while watching your stamina carefully...", 800, 150);
   
   textSize(75);
   text("Score: " + score, 800, 250);
@@ -307,10 +316,12 @@ void mousePressed() {
     if (btnPlay.clicked()) {
       gameOver = false;
       isPaused = false;
-      player.stamina = 100;
-      staminaOrb.x = -100;
+      player.stamina = 150;
+      player.health = 100;
+      staminaOrb.x = 1700;
       staminaOrb.y = (int)random(300, 550);
-      obstacle.x = -100;
+      obstacle.x = 1800;
+      player.x = 400;
       score = 0;
       screen = 'I';
       break;
@@ -345,10 +356,12 @@ void mousePressed() {
   case 'E':
     if (btnRestart.clicked()) {
       gameOver = false;
-      player.stamina = 100;
-      staminaOrb.x = -100;
+      player.stamina = 150;
+      player.health = 100;
+      staminaOrb.x = 1700;
       staminaOrb.y = (int)random(300, 550);
-      obstacle.x = -100;
+      obstacle.x = 1800;
+      player.x = 400;
       score = 0;
       screen = 'I';
       break;
@@ -366,10 +379,11 @@ void mousePressed() {
       break;
     } else if (btnRestart.clicked()) {
       isPaused = false;
-      player.stamina = 100;
-      staminaOrb.x = -100;
+      player.stamina = 150;
+      staminaOrb.x = 1700;
       staminaOrb.y = (int)random(300, 550);
-      obstacle.x = -100;
+      obstacle.x = 1700;
+      player.x = 400;
       score = 0;
       screen = 'I';
       break;
