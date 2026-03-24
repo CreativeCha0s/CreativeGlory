@@ -1,7 +1,8 @@
 class Player {
   float x, y, speed, gravity, yVelocity, groundY, jumpStrength;
   int stamina;
-  int maxStamina = 100;
+  int maxStamina = 150;
+  int health;
   int maxHealth = 100;
 
   boolean isMovingLeft, isMovingRight, isGrounded;
@@ -14,12 +15,15 @@ class Player {
     gravity = 0.6;
     yVelocity = 0;
     groundY = 600;
-    jumpStrength = -17;
+    jumpStrength = -19;
     isMovingLeft = false;
     isMovingRight = false;
     isGrounded = true;
+    
+    //placeholder
     test = loadImage("testCharacter.png");
-    stamina = 100;
+    stamina = 150;
+    health = 100;
   }
 
   void display() {
@@ -45,7 +49,7 @@ class Player {
   void move() {
     // Drain stamina when moving
     if (isMovingLeft || isMovingRight) {
-      if (stamina > 0) stamina -= 1;
+      if (stamina > 0) stamina -= 0.1;
     }
 
     // Only move if there is stamina left
@@ -55,9 +59,9 @@ class Player {
 
   void drawStaminaBar() {
     fill(50);
-    rect(x + 50, y - 20, maxStamina, 10);
+    rect(x + 75, y - 20, maxStamina, 10);
     fill(0, 255, 0);
-    rect(x + 50, y - 20, stamina, 10);    
+    rect(x + 75, y - 20, stamina, 10);    
   }
 
   //health bar
@@ -65,7 +69,7 @@ class Player {
     fill(50);
     rect(x + 50, y - 40, maxHealth, 10);
     fill(255, 0, 0);
-    rect(x + 50, y - 40, maxHealth, 10);
+    rect(x + 50, y - 40, health, 10);
   }
 
   void jump() {
