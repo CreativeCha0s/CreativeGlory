@@ -18,5 +18,14 @@ class Obstacle {
   void display() {
     image(spike, x, y, 200, 200);
   }
+  
+  boolean intersect(Player p) {
+    float d = dist(x, y, p.x, p.y);
+    if (d<175) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 }
