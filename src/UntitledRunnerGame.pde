@@ -22,7 +22,7 @@ PFont PixelFont;
 char screen = 'S'; //S = start screen, M = modes, I = endless mode, O = options/settings screen, C = credits screen, E = game over, P = pause, T = tuorial
 
 //buttons
-Button btnPlay, btnInfiniteMode, btnSpeedRunMode, btnSettings, btnBack, btnCredits, btnMainMenu, btnRestart, btnResume, btnQuit, btnTutorial;
+Button btnPlay, btnInfiniteMode, btnSpeedRunMode, btnSettings, btnBack, btnCredits, btnMainMenu, btnRestart, btnResume, btnQuit, btnTutorial, btnGalcanBiome, btnAbyssBiome, btnRandomBiome;
 
 //powerups
 PowerUp staminaOrb;
@@ -39,9 +39,12 @@ float lay2speed = 0;
 float lay3speed = 0;
 boolean gameOver = false;
 boolean isPaused = false;
+boolean setBiome = false;
 int score;
 int highScore;
 int randBiome;
+String currentBiome = "random";
+Obstacle[] spikes = new Obstacle[3];
 
 void setup () {
   size(1600, 900);
@@ -80,6 +83,9 @@ void setup () {
   btnResume = new Button ("Resume", 800, 500, 300, 100, #ff9538, #ffd1a8, 100);
   btnQuit = new Button ("Quit", 150, 825, 200, 75, #ff9538, #ffd1a8, 75);
   btnTutorial = new Button ("Tutorial", 800, 725, 250, 75, #ff9538, #ffd1a8, 75);
+  btnGalcanBiome = new Button ("Galatic Canyon", 350, 700, 450, 100, #983dcc, #ad86c4, 75);
+  btnAbyssBiome = new Button ("Lost Abyss", 800, 700, 350, 100, #2c2e9e, #5a5b96, 75);
+  btnRandomBiome = new Button ("Random", 1250, 700, 250, 100, #ff9538, #ffd1a8, 75);
 
   //power up set up
   staminaOrb = new PowerUp(1700, (int)random(300, 500), "StaminaOrb");
@@ -88,7 +94,11 @@ void setup () {
   player = new Player(400, 700, 10);
 
   //obstacle set up
-  obstacle = new Obstacle(1700, 600);
+  for (int i = 0; i < spikes.length; i++) {
+    spikes[0] = new Obstacle(1800, 600);
+    spikes[1] = new Obstacle(800, 600);
+    spikes[2] = new Obstacle(100, 600);
+  }
 }
 
 void draw() {
@@ -110,7 +120,7 @@ void draw() {
     pauseScreen();
     break;
   case 'E':
-    gameOver(); 
+    gameOver();
     break;
   case 'T':
     tutorialScreen();
@@ -195,12 +205,17 @@ void gameScreen() {
     }
 
     staminaOrb.display();
-    obstacle.display();
+    for (int i = 0; i < spikes.length; i++) {
+      spikes[i].display();
+    }
     player.display();
 
     //movement for stamina orbs and obstacles
     staminaOrb.x -= 6;
-    obstacle.x -= 6;
+    for (int i = 0; i < spikes.length; i++) {
+      spikes[i].x -= 6;
+    }
+
 
     //stamina and obstacle collision detection
     if (staminaOrb.intersect(player)) {
@@ -215,19 +230,22 @@ void gameScreen() {
       staminaOrb.y = (int)random(300, 550);
     }
 
-    if (obstacle.intersect(player)) {
-      player.health -= 100;
-
-      obstacle.x = 1800;
+    for (int i = 0; i < spikes.length; i++) {
+      if (spikes[i].intersect(player)) {
+        player.health -= 100;
+      }
     }
+
 
 
     if (staminaOrb.x < -100) {
       staminaOrb.x = 1700;
       staminaOrb.y = (int)random(300, 550);
     }
-    if (obstacle.x < -200) {
-      obstacle.x = 1800;
+    for (int i = 0; i < spikes.length; i++) {
+      if (spikes[i].x < -200) {
+        spikes[i].x = 1800;
+      }
     }
 
     //score
@@ -263,7 +281,16 @@ void settingsScreen() {
   text("SPACE - Jump", 800, 300);
   text("TAB - Pause", 800, 350);
 
+  textSize(80);
+  text("Biome", 800, 550);
+
+  textSize(60);
+  text("Biome is currently " + currentBiome + ".", 800, 825);
+
   btnBack.display();
+  btnGalcanBiome.display();
+  btnAbyssBiome.display();
+  btnRandomBiome.display();
 }
 
 void creditsScreen() {
@@ -288,7 +315,11 @@ void creditsScreen() {
 }
 
 void gameOver() {
-  image(backGalcan, 0, 0);
+  if (randBiome == 1) {
+    image(backGalcan, 0, 0);
+  } else if (randBiome == 2) {
+    image(backLostAbyss, 0, 0);
+  }
 
   fill(255);
   textAlign(CENTER, CENTER);
@@ -307,7 +338,12 @@ void gameOver() {
 }
 
 void pauseScreen() {
-  image(backGalcan, 0, 0);
+  if (randBiome == 1) {
+    image(backGalcan, 0, 0);
+  } else if (randBiome == 2) {
+    image(backLostAbyss, 0, 0);
+  }
+
 
   fill(255);
   textAlign(CENTER, CENTER);
@@ -353,10 +389,17 @@ void mousePressed() {
       player.health = 100;
       staminaOrb.x = 1700;
       staminaOrb.y = (int)random(300, 550);
-      obstacle.x = 1800;
+      for (int i = 0; i < spikes.length; i++) {
+        spikes[0] = new Obstacle(1800, 600);
+        spikes[1] = new Obstacle(900, 600);
+        spikes[2] = new Obstacle(300, 600);
+      }
       player.x = 400;
+      player.y = 100;
       score = 0;
-      randBiome = (int)random(1, 3);
+      if (setBiome == false) {
+        randBiome = (int)random(1, 3);
+      }
       screen = 'I';
       break;
     } else if (btnSettings.clicked()) {
@@ -374,6 +417,24 @@ void mousePressed() {
   case 'O':
     if (btnBack.clicked()) {
       screen = 'S';
+      break;
+    } else if (btnGalcanBiome.clicked()) {
+      setBiome = true;
+      randBiome = 1;
+      if (setBiome == true) {
+        currentBiome = "Galatic Canyon";
+      }
+      break;
+    } else if (btnAbyssBiome.clicked()) {
+      setBiome = true;
+      randBiome = 2;
+      if (setBiome == true) {
+        currentBiome = "Lost Abyss";
+      }
+      break;
+    } else if (btnRandomBiome.clicked()) {
+      setBiome = false;
+      currentBiome = "random";
       break;
     }
   case 'C':
@@ -394,8 +455,13 @@ void mousePressed() {
       player.health = 100;
       staminaOrb.x = 1700;
       staminaOrb.y = (int)random(300, 550);
-      obstacle.x = 1800;
+      for (int i = 0; i < spikes.length; i++) {
+        spikes[0] = new Obstacle(1800, 600);
+        spikes[1] = new Obstacle(800, 600);
+        spikes[2] = new Obstacle(200, 600);
+      }
       player.x = 400;
+      player.y = 100;
       score = 0;
       screen = 'I';
       break;
@@ -416,8 +482,13 @@ void mousePressed() {
       player.stamina = 150;
       staminaOrb.x = 1700;
       staminaOrb.y = (int)random(300, 550);
-      obstacle.x = 1700;
+      for (int i = 0; i < spikes.length; i++) {
+        spikes[0] = new Obstacle(1800, 600);
+        spikes[1] = new Obstacle(800, 600);
+        spikes[2] = new Obstacle(200, 600);
+      }
       player.x = 400;
+      player.y = 100;
       score = 0;
       screen = 'I';
       break;
