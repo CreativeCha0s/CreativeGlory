@@ -21,7 +21,7 @@ class Obstacle {
   
   boolean intersect(Player p) {
     float d = dist(x, y, p.x, p.y);
-    if (d<175) {
+    if (d<130) {
       return true;
     } else {
       return false;
