@@ -15,7 +15,7 @@ class Player {
     gravity = 0.6;
     yVelocity = 0;
     groundY = 600;
-    jumpStrength = -19;
+    jumpStrength = -21;
     isMovingLeft = false;
     isMovingRight = false;
     isGrounded = true;
@@ -61,7 +61,7 @@ class Player {
     fill(50);
     rect(x + 75, y - 20, maxStamina, 10);
     fill(0, 255, 0);
-    rect(x + 75, y - 20, stamina, 10);    
+    rect(x + 75 , y - 20, stamina, 10);    
   }
 
   //health bar
