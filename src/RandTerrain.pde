@@ -1,4 +1,4 @@
-// N/A
+// RYAN OLIVER (unused in final game)
 
 //terrain images
 
