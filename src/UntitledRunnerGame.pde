@@ -1,3 +1,4 @@
+// EVERYONE
 //recent changes: added fully functioning UI (pause menu, gameover screen, restart button, button to exit program, tutorial, controls), score system, obstacle collision, biome randomization
 //working on: gravity simulation, music, background aesthetics
 
@@ -8,7 +9,7 @@
 // Set up the images, buttons, fonts, screen sizes
 
 //images
-PImage titleScreen, backGalcan, layOneGalcan, layTwoGalcan, layThreeGalcan, backLostAbyss, layOneLostAbyss, layTwoLostAbyss, layThreeLostAbyss;
+PImage titleScreen, backGalcan, layOneGalcan, layTwoGalcan, layThreeGalcan, floorGalcan, backLostAbyss, layOneLostAbyss, layTwoLostAbyss, layThreeLostAbyss, floorLostAbyss;
 
 //font
 PFont PixelFont;
@@ -37,6 +38,7 @@ Obstacle obstacle;
 float lay1speed = 0;
 float lay2speed = 0;
 float lay3speed = 0;
+float floorspeed = 0;
 boolean gameOver = false;
 boolean isPaused = false;
 boolean setBiome = false;
@@ -67,10 +69,12 @@ void setup () {
   layOneGalcan = loadImage("GalacticCanyonLayer1.png");
   layTwoGalcan = loadImage("GalacticCanyonLayer2.png");
   layThreeGalcan = loadImage("GalacticCanyonLayer3.png");
+  floorGalcan = loadImage("GalacticCanyonFloor.png");
   backLostAbyss = loadImage("LostAbyssBackground.png");
   layOneLostAbyss = loadImage("LostAbyssLayer1.png");
   layTwoLostAbyss = loadImage("LostAbyssLayer2.png");
   layThreeLostAbyss = loadImage("LostAbyssLayer3.png");
+  floorLostAbyss = loadImage("LostAbyssFloor.png");
 
 
   //button setup, parameters in order are text, x position, y position, width, height, normal color, hovering color, text size
@@ -164,12 +168,15 @@ void gameScreen() {
       image(layTwoGalcan, lay2speed + layTwoGalcan.width, 0);
       image(layThreeGalcan, lay3speed, 0);
       image(layThreeGalcan, lay3speed + layThreeGalcan.width, 0);
+      image(floorGalcan, floorspeed, 0);
+      image(floorGalcan, floorspeed + floorGalcan.width, 0);
+      floorGalcan.resize(1600, 900);
 
       //ITS NOT LAGGY ANYMORE YAYAYAY!!!
       lay1speed -= 1;
       lay2speed -= 2;
       lay3speed -= 3;
-
+      floorspeed -= 6;
       if (lay1speed <= -layOneGalcan.width) {
         lay1speed = 0;
       }
@@ -178,6 +185,9 @@ void gameScreen() {
       }
       if (lay3speed <= -layOneGalcan.width) {
         lay3speed = 0;
+      }
+      if (floorspeed <= -layOneGalcan.width) {
+        floorspeed = 0;
       }
     } else if (randBiome == 2) {
       image(backLostAbyss, 0, 0);
@@ -187,12 +197,14 @@ void gameScreen() {
       image(layTwoLostAbyss, lay2speed + layTwoLostAbyss.width, 0);
       image(layThreeLostAbyss, lay3speed, 0);
       image(layThreeLostAbyss, lay3speed + layThreeLostAbyss.width, 0);
+      image(floorLostAbyss, floorspeed, 0);
+      image(floorLostAbyss, floorspeed + floorLostAbyss.width, 0);
 
       //ITS NOT LAGGY ANYMORE YAYAYAY!!!
       lay1speed -= 1;
       lay2speed -= 2;
       lay3speed -= 3;
-
+      floorspeed -= 6;
       if (lay1speed <= -layOneGalcan.width) {
         lay1speed = 0;
       }
@@ -201,6 +213,9 @@ void gameScreen() {
       }
       if (lay3speed <= -layOneGalcan.width) {
         lay3speed = 0;
+      }
+      if (floorspeed <= -layOneGalcan.width) {
+        floorspeed = 0;
       }
     }
 
