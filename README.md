@@ -20,7 +20,7 @@ Other Additions: Power Ups, Stamina Meter, and possibly music and additional fea
 
 ##### Title Screen
 
-<img width="960" height="540" alt="pixil-frame-0 (4)" src="https://github.com/user-attachments/assets/d6e4c410-e0b6-4cbe-842f-4b280900e46f" />
+![TitleScreen](![RunningGame](https://github.com/CreativeCha0s/CreativeGlory/blob/main/images/runninggame.png?raw=true))
 
 ##### Playing the game
 
