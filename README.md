@@ -24,6 +24,7 @@ Other Additions: Power Ups, Stamina Meter, and possibly music and additional fea
 
 ##### Playing the game
 
+![RunningGame](https://github.com/CreativeCha0s/CreativeGlory/blob/main/images/runninggame.png?raw=true)
 <img width="960" height="540" alt="pixil-frame-0 (5)" src="https://github.com/user-attachments/assets/7dccf020-1f06-4fad-9231-8a54134b2a2b" />
 
 ##### Game Over Screen
