@@ -1,3 +1,6 @@
+//ANGIE LIU
+//GRACE PERRY
+
 class Player {
   float x, y, speed, gravity, yVelocity, groundY, jumpStrength;
   int stamina;
@@ -14,7 +17,7 @@ class Player {
     this.speed = speed;
     gravity = 0.6;
     yVelocity = 0;
-    groundY = 600;
+    groundY = 650;
     jumpStrength = -21;
     isMovingLeft = false;
     isMovingRight = false;
@@ -60,7 +63,7 @@ class Player {
   void drawStaminaBar() {
     fill(50);
     rect(x + 75, y - 20, maxStamina, 10);
-    fill(0, 255, 0);
+    fill(#19ecff);
     rect(x + 75 , y - 20, stamina, 10);    
   }
 
