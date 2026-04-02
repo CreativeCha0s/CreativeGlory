@@ -1,4 +1,4 @@
-//ANGIE LUI
+//ANGIE LIU
 //RYAN OLIVER
 
 class Obstacle {
