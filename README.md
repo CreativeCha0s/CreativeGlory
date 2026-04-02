@@ -32,7 +32,7 @@ Other Additions: Power Ups, Stamina Meter, and possibly music and additional fea
 
 ##### Class Diagram
 
-<img width="844" height="928" alt="Screenshot 2026-02-23 194748" src="https://github.com/user-attachments/assets/0743af09-1ff9-4186-bdb1-42b22db0109e" />
+![UML](https://github.com/CreativeCha0s/CreativeGlory/blob/main/images/URGUML.png?raw=true)
 
 
 
